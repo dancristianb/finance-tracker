@@ -9,6 +9,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  def full_name
+    return "#{first_name} #{last_name}" if first_name || last_name
+
+    "anonymous"
+  end
+
   def can_track_stock?(ticker_symbol)
     under_stock_limit? && !stock_already_tracked?(ticker_symbol)
   end

@@ -9,8 +9,9 @@ class UsersController < ApplicationController
 
   def search
     if params[:friend].present?
-      @friend = params[:friend]
-      if @friend.present?
+      @friends = User.matches(params[:friend])
+      @friends = @friends.reject { |friend| friend.id == current_user.id }
+      if @friends.present?
         respond_to do |format|
           format.js { render partial: 'users/friend_result' }
         end
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
       end
     else
       respond_to do |format|
-        flash.now[:alert] = "Please enter a email/name to search"
+        flash.now[:alert] = "Please enter a friend email or name to search for"
         format.js { render partial: 'users/friend_result' }
       end
     end

@@ -11,6 +11,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  scope :matches, lambda { |x|
+    where('email ILIKE ? OR first_name ILIKE ? OR last_name ILIKE ?',
+          "%#{x}%", "%#{x}%", "%#{x}%")
+  }
+
   def full_name
     return "#{first_name} #{last_name}" if first_name || last_name
 

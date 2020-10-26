@@ -19,7 +19,7 @@ class User < ApplicationRecord
   def full_name
     return "#{first_name} #{last_name}" if first_name || last_name
 
-    "anonymous"
+    'anonymous'
   end
 
   def can_track_stock?(ticker_symbol)
@@ -35,5 +35,9 @@ class User < ApplicationRecord
 
   def under_stock_limit?
     stocks.count < MAX_STOCK_COUNT
+  end
+
+  def not_friends_with?(friend)
+    !friends.where(id: friend.id).exists?
   end
 end

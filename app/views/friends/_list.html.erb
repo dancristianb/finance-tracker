@@ -16,9 +16,12 @@
             <td><%= friend.email %></td>
             <td><%= friend.first_name %></td>
             <td><%= friend.last_name %></td>
-            <td><%= link_to 'Stop following', friendship_path(friend),
+            <td>
+              <%= link_to 'View profile', user_path(friend), class: 'btn btn-success btn-sm' %>
+              <%= link_to 'Stop following', friendship_path(friend),
                             method: :delete,
-                            class: 'btn btn-warning btn-sm' %></td>
+                            class: 'btn btn-warning btn-sm' %>
+            </td>
           </tr>
         <% end %>
         </tbody>

@@ -1,29 +1,28 @@
-<div class="results-block">
-  <%= render 'layouts/messages' %>
-</div>
+<%= render 'layouts/messages' %>
 
 <% if @friends.present? %>
-  <div class="card card-header results-block">
-    <table class="col-sm-12">
-      <tbody>
-      <% @friends.each do |friend| %>
-        <tr>
-          <td><strong>Name:</strong><%= friend.full_name %></td>
-          <td><strong>Email:</strong><%= friend.email %></td>
-          <td><strong>Actions:</strong></td>
-          <td>
-            <%= link_to 'View profile', user_path(friend), class: 'btn btn-success btn-sm' %>
-            <% if current_user.not_friends_with?(friend) %>
-              <%= link_to 'Follow friend?', friendships_path(friend: friend),
-                          class: 'btn btn-success btn-sm', method: :post %>
-            <% else %>
-              <span class="badge badge-secondary">You are friends</span>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-9">
+      <div class="row">
+        <% @friends.each do |friend| %>
+          <div class="col-sm-4">
+            <div class="card bg-light mt-4">
+              <%= image_tag 'undraw_profile_pic_ic5t.svg', class: "card-img-top p-4" %>
+              <div class="card-body">
+                <h5 class="card-title text-success"><%= friend.full_name %></h5>
+                <p class="card-text">Email: <%= friend.email %></p>
+                <%= link_to 'View profile', user_path(friend), class: 'btn btn-success btn-sm' %>
+                <% if current_user.not_friends_with?(friend) %>
+                  <%= link_to 'Follow friend?', friendships_path(friend: friend),
+                              class: 'btn btn-success btn-sm', method: :post %>
+                <% else %>
+                  <span class="badge badge-secondary">You are friends</span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-
 <% end %>

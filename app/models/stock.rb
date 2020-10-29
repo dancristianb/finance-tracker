@@ -20,4 +20,16 @@ class Stock < ApplicationRecord
       nil
     end
   end
+
+  def self.refresh_prices
+    client = IEX::Api::Client.new(
+      publishable_token: Rails.application.credentials[:iex_client][:sandbox_api_key],
+      endpoint: 'https://sandbox.iexapis.com/v1'
+    )
+
+    all.each do |stock|
+      stock.last_price = client.price(stock.ticker)
+      stock.save
+    end
+  end
 end

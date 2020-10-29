@@ -19,4 +19,13 @@ class StocksController < ApplicationController
       end
     end
   end
+
+  def refresh_prices
+    respond_to do |format|
+      Stock.refresh_prices
+      @user = current_user
+      @tracked_stocks = @user.stocks
+      format.js { render partial: 'stocks/list' }
+    end
+  end
 end
